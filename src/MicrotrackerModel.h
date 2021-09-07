@@ -18,7 +18,7 @@ public:
 	{
 		p0 = p1 = p2 = p3 = p32 = p33 = p34 = 0.0;
 		SetCutoff(1000.0f);
-		SetResonance(0.10f);
+		SetResonance(0.90f);
 	}
 
 	virtual ~MicrotrackerMoog() {}

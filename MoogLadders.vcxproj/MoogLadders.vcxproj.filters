@@ -77,5 +77,8 @@
     <ClInclude Include="..\src\OberheimVariationModel.h">
       <Filter>source\models</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\tinywav.h">
+      <Filter>source\extra</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

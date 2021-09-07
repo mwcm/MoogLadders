@@ -47,7 +47,7 @@ public:
 		
 		drive = 1.0f;
 		
-		SetCutoff(1000.0f); // normalized cutoff frequency
+		SetCutoff(5000.0f); // normalized cutoff frequency
 		SetResonance(0.1f); // [0, 4]
 	}
 	
