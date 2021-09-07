@@ -1,6 +1,8 @@
 #if defined(_MSC_VER)
     #pragma comment(lib, "dsound.lib")
 #endif
+#include <sstream>
+
 #include "AudioDevice.h"
 #include "NoiseGenerator.h"
 #include <iostream>
@@ -31,8 +33,10 @@ int main()
 
 	#define NUM_CHANNELS 2
 	#define SAMPLE_RATE 26040
+	int CUTOFF = 1500;
+	float RESONANCE = 2.1f;
 	
-	std::string infile_name = "C:/Users/mwcm/Documents/GitHub/pitcher/warning6ud1.wav";
+	std::string infile_name = "C:/Users/mwcm/Documents/GitHub/pitcher/rain4.wav";
 
 	// Open input file.
 	SndfileHandle infile_handle(infile_name);
@@ -56,42 +60,46 @@ int main()
 	device.Open(device.info.id);
 
 	ImprovedMoog improvedModel(SAMPLE_RATE);
+	improvedModel.SetCutoff(CUTOFF);
+	improvedModel.SetResonance(RESONANCE);
 	improvedModel.Process(in_data.data(), in_data.size());
 
-	StilsonMoog stilsonModel(SAMPLE_RATE);
-	//stilsonModel.Process(noiseSamples.data(), noiseSamples.size());
+	//StilsonMoog stilsonModel(SAMPLE_RATE);
+	//stilsonModel.Process(in_data.data(), in_data.size());
 	
 	SimplifiedMoog simplifiedModel(SAMPLE_RATE);
-	//simplifiedModel.Process(noiseSamples.data(), noiseSamples.size());
+	//simplifiedModel.Process(in_data.data(), in_data.size());
 	
 	HuovilainenMoog huovilainenModel(SAMPLE_RATE);
-	//huovilainenModel.Process(noiseSamples.data(), noiseSamples.size());
+	//huovilainenModel.Process(in_data.data(), in_data.size());
 
 	MicrotrackerMoog microtrackerModel(SAMPLE_RATE);
-	//microtrackerModel.Process(noiseSamples.data(), noiseSamples.size());
+	//microtrackerModel.Process(in_data.data(), in_data.size());
 
 	MusicDSPMoog musicdspModel(SAMPLE_RATE);
-	//musicdspModel.Process(noiseSamples.data(), noiseSamples.size());
+	//musicdspModel.Process(in_data.data(), in_data.size());
 	
     KrajeskiMoog aaronModel(SAMPLE_RATE);
-	//aaronModel.Process(noiseSamples.data(), noiseSamples.size());
+	//aaronModel.Process(in_data.data(), in_data.size());
 
 	RKSimulationMoog rkModel(SAMPLE_RATE);
-	//rkModel.Process(noiseSamples.data(), noiseSamples.size());
+	//rkModel.Process(in_data.data(), in_data.size());
 	
 	OberheimVariationMoog oberheimModel(SAMPLE_RATE);
-	//oberheimModel.Process(noiseSamples.data(), noiseSamples.size());
+	//oberheimModel.Process(in_data.data(), in_data.size());
 	
 	const int len = infile_handle.frames() / SAMPLE_RATE;
 
 	SF_INFO sfinfo;
 
+	std::ostringstream oss;
+	oss << "C:/Users/mwcm/Documents/GitHub/pitcher/rain4_cutoff_" << CUTOFF << "_resonance_" << RESONANCE << ".WAV";
+	std::string aeiou = oss.str();
+	const char* filename = aeiou.c_str();
+
 	sfinfo.channels = 1;
 	sfinfo.samplerate = 44100;
 	sfinfo.format = SF_FORMAT_WAV | SF_FORMAT_PCM_16;
-	
-
-	const char* filename = "C:/Users/mwcm/Documents/GitHub/pitcher/warning6ud1_FILTERED.wav";
 
 	SNDFILE* outfile = sf_open(filename, SFM_WRITE, &sfinfo);
 
