@@ -8,8 +8,6 @@
 #include <chrono>
 #include <vector>
 
-#include <sndfile.h>
-#include "sndfile.hh"
 #include "ImprovedModel.h"
 
 
